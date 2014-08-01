@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h2>Welcome to ISEpam Logger site!</h2>
+    <p>
+    You can track any errors on your site based on <i>ASP.NET</i> platform on the client side and on the server. In other words, any errors that occur on your site, will be transferred to the server, which will be logged into a database and analyze. You can connect an unlimited number of sites. <br/>
+    </p>
+    @if (Request.IsAuthenticated)
+    {
+       <p>Use this button to view exception's list.</p>
+        @Html.ActionLink("View stats", "Index", "Stat", null, new {@class = "btn btn-primary"})
+    }
+    else
+    {
+        if (Request.IsAuthenticated && User.IsInRole("user"))
+        {
+        <p>
+            Now you can add new site to track it. For it, please, push <b>@Html.ActionLink("here", "AddSite", "Site").</b>.</p>
+        }
+        else
+        {
+            <p>
+                Please, @Html.ActionLink("log in", "Login", "Account") or create new @Html.ActionLink("account", "Register", "Account") for getting all benefits from this site.
+            </p>
+        }
+    }
+</div>

@@ -1,0 +1,44 @@
+﻿@model Logger.Core.Models.FailWithPager
+@{
+    ViewBag.Title = "ErrorDetail #" + @Model.Error.Id;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix">
+    <div class="pull-left">
+        <h3>Exception detail</h3>
+    </div>
+    <form class="navbar-form pull-right col-xs-3" role="search" onsubmit="errorShow($('#iderror').val()); return false;">
+        <div class="input-group">
+            <input id="iderror" type="text" class="form-control" placeholder="enter id error" autofocus onkeyup=" this.value = this.value.replace(/\D/, '') ">
+            <div class="input-group-btn">
+                <button onclick=" errorShow($('#iderror').val()); " type="button" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="errordetailcontainer">
+    @Html.Partial("ErrorDetailTbl", Model)
+</div>
+
+<script type="text/javascript">
+    $(document).bind('keyup', function(event) {
+        if (event.keyCode == '39') { //button "VK_RIGHT"
+            if (!$('#nexterror').hasClass("disabled")) {
+                errorShow($('#nexterror').attr("errid"));
+            }
+        }
+        if (event.keyCode == '37') { //button "VK_LEFT"
+            if (!$('#preverror').hasClass("disabled")) {
+                errorShow($('#preverror').attr("errid"));
+            }
+        }
+    });
+</script>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/jquery.history")
+    @Scripts.Render("~/Scripts/Prettify/run_prettify")
+    @Scripts.Render("~/Scripts/app/logger-site")
+}

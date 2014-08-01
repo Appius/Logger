@@ -1,0 +1,299 @@
+﻿html { min-width: 768px; }
+
+html, body { height: 100%; }
+
+#wrap { min-height: 100%; }
+
+#main {
+    overflow: auto;
+    padding-bottom: 20px;
+}
+
+header, header .navbar-inverse .brand, .navbar-inverse .nav > li > a {
+    border-bottom-color: #ffffff;
+    border-top-color: #ffffff;
+    color: #ffffff;
+}
+
+/*.navbar-collapse.collapse {
+    display: block !important;
+    height: auto !important;
+    padding-bottom: 0px;
+    overflow: visible !important;
+}*/
+
+.navbar-inverse .nav li.dropdown > .dropdown-toggle .caret {
+    border-bottom-color: #ffffff;
+    border-top-color: #ffffff;
+}
+
+.navbar-inverse .navbar-inner, .navbar-inverse .nav li.dropdown.open > .dropdown-toggle, .navbar-inverse .nav li.dropdown.active > .dropdown-toggle, .navbar-inverse .nav li.dropdown.open.active > .dropdown-toggle {
+    background-color: #4d8eb9;
+    background-image: none;
+    background-repeat: no-repeat;
+    border-color: #999999;
+    filter: none;
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus { background-color: #4d8eb9; }
+
+.navbar-inner { background-color: #2980b9; }
+
+.navbar-inverse .navbar-brand { color: #fff; }
+
+footer {
+    border: none;
+    border-top: 1px #ccc solid;
+    clear: both;
+    height: 25px;
+    margin-top: -25px;
+    padding-top: 1px;
+    position: relative;
+}
+
+.logoffhref {
+    clear: both;
+    color: #333;
+    display: block;
+    font-weight: normal;
+    line-height: 1.42857;
+    padding: 3px 20px;
+    text-decoration: none !important;
+    white-space: nowrap;
+}
+
+.navbar-nav.pull-right > li > .dropdown-menu {
+    left: auto;
+    right: 0px;
+}
+
+.navbar-collapse { padding-right: 0; }
+
+.table > tbody > tr > td { vertical-align: middle; }
+
+th { text-align: center; }
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+
+.field-validation-error { color: rgb(185, 74, 72); }
+
+.field-validation-valid { display: none; }
+
+.input-validation-error { border-color: rgb(185, 74, 72); }
+
+.validation-summary-errors {
+    color: rgb(185, 74, 72);
+    font-weight: bold;
+}
+
+.validation-summary-valid { display: none; }
+
+.bs-callout {
+    border-left: 5px solid rgb(238, 238, 238);
+    margin: 20px 0;
+    padding: 15px 30px 15px 15px;
+}
+
+.bs-callout-danger {
+    background-color: #fcf2f2;
+    border-color: #dFb5b4;
+}
+
+.bs-callout-warning {
+    background-color: #fefbed;
+    border-color: #f1e7bc;
+}
+
+.bs-callout-info {
+    background-color: #f0f7fd;
+    border-color: #d0e3f0;
+}
+
+/* Styles for adding site and registration pages
+-----------------------------------------------------------*/
+
+.form-addingsite .form-horizontal .form-group, .form-registration .form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.form-addingsite .form-horizontal .controls, .form-registration .form-horizontal .controls { margin-left: 180px; }
+
+.form-addingsite .form-horizontal .control-group, .form-registration .form-horizontal .control-group { margin-bottom: 20px; }
+
+.form-addingsite .form-horizontal .control-label, .form-registration .form-horizontal .control-label {
+    float: left;
+    padding-top: 5px;
+    text-align: right;
+    width: 160px;
+}
+
+/* Styles for edit user information
+-----------------------------------------------------------*/
+
+.form-edit { margin-bottom: 10px; }
+
+.form-edit .form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.form-edit img {
+    float: left;
+    margin-right: 20px;
+    max-height: 100px;
+    max-width: 100px;
+}
+
+.form-edit .controls { margin-left: 170px; }
+
+.form-edit .form-group { margin-bottom: 20px; }
+
+.form-edit .control-label {
+    float: left;
+    padding-top: 5px;
+    text-align: right;
+    width: 160px;
+}
+
+/* Styles for index site page
+-----------------------------------------------------------*/
+.apikey {
+    width: 275px;
+    text-align: center;
+}
+.togglesite, .deletesite, .switchsite {
+    text-align: center;
+    width: 120px;
+}
+
+/* Styles for users page
+-----------------------------------------------------------*/
+
+.giveadmin { width: 95px; }
+
+.lockuser { width: 135px; }
+
+.giveadmin, .lockuser { text-align: center; }
+
+/* Styles for signin page
+-----------------------------------------------------------*/
+
+@media (min-width: 768px) {
+    .omb_row-sm-offset-3 div:first-child[class*="col-"] { margin-left: 25%; }
+}
+
+.omb_login .omb_authTitle {
+    line-height: 300%;
+    text-align: center;
+}
+
+.omb_login .omb_socialButtons a {
+    color: white;
+    opacity: 0.9;
+}
+
+.omb_login .omb_socialButtons a:hover {
+    color: white;
+    opacity: 1;
+}
+
+.omb_login .omb_socialButtons .omb_btn-facebook { background: #3b5998; }
+
+.omb_login .omb_socialButtons .omb_btn-twitter { background: #00aced; }
+
+.omb_login .omb_socialButtons .omb_btn-google { background: #c32f10; }
+
+
+.omb_login .omb_loginOr {
+    color: #aaa;
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    position: relative;
+}
+
+.omb_login .omb_loginOr .omb_hrOr {
+    background-color: #cdcdcd;
+    height: 1px;
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+}
+
+.omb_login .omb_loginOr .omb_spanOr {
+    background-color: white;
+    display: block;
+    left: 50%;
+    margin-left: -1.5em;
+    position: absolute;
+    text-align: center;
+    top: -0.6em;
+    width: 3em;
+}
+
+.omb_login .omb_loginForm .input-group.i { width: 2em; }
+
+.omb_login .omb_loginForm .help-block { color: red; }
+
+@media (min-width: 768px) {
+    .omb_login .omb_forgotPwd {
+        margin-top: 10px;
+        text-align: right;
+    }
+}
+
+/* Styles for stat index page
+-----------------------------------------------------------*/
+
+#maintbl thead { height: 30px; }
+
+#maintbl tbody tr:hover { background-color: #d3e7f5; }
+
+.dtcss, .browsercss, .oscss {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.dtcss { width: 100px; }
+
+.browsercss { width: 75px; }
+
+.oscss { width: 55px; }
+
+.namecss { width: 200px; }
+
+#pagesize {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    width: 30px;
+}
+
+.pointer { cursor: pointer; }
+
+/* Styles for error detail page
+-----------------------------------------------------------*/
+#errordetail {
+    table-layout: fixed;
+}
+
+.curid {
+    width: 110px;
+}
+
+.curstacktrace, .curmessage, .curuseragent, .curtargetsite {
+    overflow: auto;
+    text-align: left;
+    vertical-align: top!important;
+}
+
+.curstacktrace {
+    height: 200px;
+    max-height: 200px;
+}
+
+.curmessage { max-height: 52px; }
+.curuseragent, .curtargetsite { max-height: 40px; }

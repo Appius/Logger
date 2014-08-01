@@ -1,0 +1,73 @@
+﻿@using System.Diagnostics
+@model Logger.Core.Models.FailWithPager
+
+@if (Model.Error == null)
+{
+    <h4><span class="label label-info">Important</span> Exception #@ViewBag.NullId doesn't exist!</h4> 
+}
+else
+{
+    <table id="errordetail" class="table table-bordered">
+        <tbody>
+            <tr>
+                <td class="curid">Error ID:</td>
+                <td><b>@Model.Error.Id</b></td>
+            </tr>
+            <tr>
+                <td>Error name:</td>
+                <td><b>@Model.Error.Name</b></td>
+            </tr>
+            <tr>
+                <td>Datetime:</td>
+                <td><b>@Model.Error.DateTime</b></td>
+            </tr>
+            <tr>
+                <td>Message:</td>
+                <td class="curmessage"><b>@Model.Error.Message</b></td>
+            </tr>
+            <tr>
+                <td>OS & Browser:</td>
+                <td><b>@Model.Error.OS.Name & @Model.Error.Browser.Name</b></td>
+            </tr>
+            <tr>
+                <td>Referrer:</td>
+                <td><a href="@Model.Error.Referrer">@Model.Error.Referrer</a></td>
+            </tr>
+            <tr>
+                <td>Useragent:</td>
+                <td class="curuseragent">@Model.Error.Useragent</td>
+            </tr>
+            <tr>
+                <td>Postdata:</td>
+                <td>@Model.Error.Postdata</td>
+            </tr>
+            <tr>
+                <td>Targetsite:</td>
+                <td class="curtargetsite">@Model.Error.TargetSite</td>
+            </tr>
+            <tr>
+                <td>Source:</td>
+                <td>@Model.Error.Source</td>
+            </tr>
+
+            <tr>
+                <td>Stacktrace:</td>
+                <td class="curstacktrace">
+                   <pre class="prettyprint">@(new HtmlString(Model.Error.StackTrace.Replace("\n", "")))</pre>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+<ul class="pager">
+    <li id="preverror" 
+        @{
+            Debug.Assert(@Model != null, "@Model != null");
+        }
+        @if(Model.Prev==0){<text>class="disabled"</text>}else{<text>errid="@Model.Prev"</text>}>
+        <a href="#" @if(@Model.Prev!=0){<text>onclick="javascript:errorShow(@Model.Prev); "</text>}>Previous</a>
+    </li>
+    <li id="nexterror" style="margin: 0 0 0 20px;"@if(@Model.Next==0){<text>class="disabled"</text>}else{<text>errid="@Model.Next"</text>}>
+        <a href="#" @if(Model.Next!=0){<text>onclick="javascript:errorShow(@Model.Next); "</text>}>Next</a>
+    </li>
+</ul>

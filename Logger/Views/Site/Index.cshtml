@@ -1,0 +1,85 @@
+﻿@model IPagedList<Logger.Core.Models.Tables.Site>
+@{
+    ViewBag.Title = "Browser Sites";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table class="table table-bordered" id="siteslist">
+    <caption>
+        <div class="pull-left"><h3>Connected sites</h3></div>
+    </caption>
+    <thead>
+        <tr>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Owner</th>
+            }
+            <th>Name</th>
+            <th class="apikey">Api key</th>
+            <th class="switchsite">Choose</th>
+            @if (User.IsInRole("admin"))
+            {
+                <th class="togglesite">On/Off</th>
+                <th class="deletesite">Remove site</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var site in Model)
+        {
+            <tr id="row@(site.Id)" class="@{if (!site.IsBlocked){<text>success</text>}else{<text>danger</text>}}">
+                @if (User.IsInRole("admin"))
+                {
+                    <td>@site.UserProfile.FirstName @site.UserProfile.LastName</td>
+                }
+                <td>
+                    <a target="_blank" href="@site.Url">
+                        @site.Name
+                    </a>
+                    @if ((Session["siteid"] != null) && ((int)Session["siteid"] == site.Id))
+                    {<text><div class="label label-warning">(текущий)</div></text>}
+                </td>
+                <td class="apikey">@site.ApiKey</td>
+                <td class="switchsite">
+                    @if (Request.Url != null && !Request.Url.AbsoluteUri.Contains("page="))
+                    {
+                        @(!String.IsNullOrEmpty(Request.QueryString["urlreferrer"])
+                              ? Html.ActionLink("Switch", "Index", "Site", new {nid = site.Id, urlreferrer = Request.QueryString["urlreferrer"]}, new {@class = "swlink"})
+                              : Html.ActionLink("Switch", "Index", "Site", new {nid = site.Id}, new {@class = "swlink"}))
+                    }
+                    else
+                    {
+                        @(!String.IsNullOrEmpty(Request.QueryString["urlreferrer"])
+                              ? Html.ActionLink("Switch", "Index", "Site", new {nid = site.Id, urlreferrer = Request.QueryString["urlreferrer"], page = Request.QueryString["page"]}, new {@class = "swlink"})
+                              : Html.ActionLink("Switch", "Index", "Site", new {nid = site.Id, page = Request.QueryString["page"]}, new {@class = "swlink"}))
+                    }
+                </td>   
+                @if (User.IsInRole("admin"))
+                {
+                    <td class="togglesite">
+                        <input type="checkbox" @if (!site.IsBlocked) { <text> checked="checked" </text> } name="@site.Id" />
+
+                    </td>
+                    <td class="deletesite">
+                        <a class="btn btn-danger btn-sm" href="javascript:deletesite(@site.Id);">
+                            <span class="glyphicon glyphicon-remove"></span> Remove it
+                        </a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount).Options(o => o.DisplayTemplate("BootstrapPagination"))
+
+@Html.ActionLink("Add new site", "AddSite", "Site", null, new {@class = "btn btn-primary btn-default"})
+
+@section scripts {
+    @Scripts.Render("~/Scripts/app/logger-site")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.togglesite :checkbox').change(function() {
+                togglesite($(this).attr("name"));
+            });
+        });
+    </script>
+}

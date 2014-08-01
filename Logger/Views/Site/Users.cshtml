@@ -1,0 +1,76 @@
+﻿@model IPagedList<Logger.Core.Models.Tables.UserProfile>
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-bordered" id="userslist">
+    <caption>
+        <div class="pull-left"><h3>Users</h3></div>
+    </caption>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Admin?</th>
+        <th>Active?</th>
+    </tr>
+    @foreach (var user in Model)
+{
+    var membershipUser = @Membership.GetUser(user.Email);
+    <tr id="row@(user.Id)" class="@{if (membershipUser != null && membershipUser.IsApproved)
+                                    {<text>success</text>}else{<text>danger</text>}}">
+            <td>
+                @user.FirstName @user.LastName @if (@User.Identity.Name == @user.Email)
+                                               {
+                                                   <text><div class="label label-warning">(это Вы)</div></text>
+                                               }
+            </td>
+            <td>@user.Email</td>
+            <td class="giveadmin">
+                <input type="checkbox" @if (Roles.GetRolesForUser(@user.Email).Contains("Admin"))
+                                       {
+                                           <text> checked="checked" </text>
+                                       } @if (@user.Email == User.Identity.Name)
+                                         {
+                                             <text> disabled="disabled" </text>
+                                         } name="@user.Email" />
+            </td>
+            <td class="lockuser">
+                <input type="checkbox"
+                    @if (membershipUser != null && membershipUser.IsApproved)
+                    {
+                        <text> checked="checked" </text>
+                    } @if (@user.Email == User.Identity.Name)
+                      {
+                          <text> disabled="disabled" </text>
+                      } name="@user.Email" />
+            </td>
+        </tr>
+    }
+</table>
+@Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount).Options(o => o.DisplayTemplate("BootstrapPagination"))
+
+@section scripts {
+    @Scripts.Render("~/Scripts/app/logger-site")
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.lockuser :checkbox').change(function () {
+                alert("Not supported. Try later.");
+                /*
+                if ($(this).is(":checked")) {
+                    unlock($(this).attr("name"));
+                } else {
+                    lock($(this).attr("name"));
+                }*/
+            });
+            $('.giveadmin :checkbox').change(function() {
+                if ($(this).is(":checked")) {
+                    giveadmin($(this).attr("name"));
+                } else {
+                    revokeadmin($(this).attr("name"));
+                }
+            });
+        });
+    </script>
+}

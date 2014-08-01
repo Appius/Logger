@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "How is it work?";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>
+    How to connect my site?
+</h2>
+
+<p>
+    You have to sign up and add site with with special @Html.ActionLink("button", "AddSite", "Site"). After adding system will generate api key, which you have to insert to web.config.
+    Download and install nuget package ISEpam.Logger. After it, please configurate your global filter and web.config as you can see below. <b>You have to insert api key which you get after adding new site on the step 1!</b>
+</p>
+<pre class="prettyprint">
+&lt;configuration&gt;
+    &lt;appSettings&gt;
+        &lt;add key=&quot;ServiceUrl&quot; value=&quot;http://logger-registration.azurewebsites.net/&quot; /&gt;
+        &lt;add key=&quot;ApiKey&quot; value=&quot;<b>Enter api key here</b>&quot; /&gt;
+    &lt;/appSettings&gt;
+    &lt;system.webServer&gt;
+        &lt;modules runAllManagedModulesForAllRequests=&quot;true&quot;&gt;
+            &lt;add name=&quot;appfail&quot; type=&quot;Logger.Client.HandleExceptionModule&quot; /&gt;
+        &lt;/modules&gt;
+    &lt;/system.webServer&gt;
+&lt;/configuration&gt;
+</pre>
+
+<p>And add new filter:</p>
+<pre class="prettyprint">
+public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+{
+    filters.Add(new Logger.Client.LoggerFilter());
+}
+</pre>
+
+<b>This is it!</b> Your site automatically start to send any errors to our server and you can track him with this site or use api.
+@section scripts
+{
+    @Scripts.Render("~/Scripts/Prettify/run_prettify")
+}

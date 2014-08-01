@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>2.0.0.0</version>
+    <title>$title$</title>
+    <authors>Ushakov Vladyslav</authors>
+    <owners>Ushakov Vladyslav</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Copyright 2014 EpamSystems</copyright>
+        <dependencies>
+            <group targetFramework=".NETFramework4.5">
+                <dependency id="Newtonsoft.Json" version="6.0.2" />
+                <dependency id="Microsoft.AspNet.WebApi.Client" version="5.1.2" />
+            </group>
+        </dependencies>
+        <frameworkAssemblies>
+            <frameworkAssembly assemblyName="Newtonsoft.Json" targetFramework=".NETFramework4.5" />
+            <frameworkAssembly assemblyName="System" targetFramework=".NETFramework4.5" />
+            <frameworkAssembly assemblyName="System.Configuration" targetFramework=".NETFramework4.5" />
+            <frameworkAssembly assemblyName="System.Core" targetFramework=".NETFramework4.5" />
+            <frameworkAssembly assemblyName="System.Net.Http" targetFramework=".NETFramework4.5" />
+            <frameworkAssembly assemblyName="System.Net.Http.Formatting" targetFramework=".NETFramework4.5" />
+            <frameworkAssembly assemblyName="System.Web" targetFramework=".NETFramework4.5" />
+            <frameworkAssembly assemblyName="System.Web.Abstractions" targetFramework=".NETFramework4.0" />
+            <frameworkAssembly assemblyName="System.Web.Extensions" targetFramework=".NETFramework4.5" />
+            <frameworkAssembly assemblyName="System.Web.Mvc" targetFramework=".NETFramework4.5" />
+        </frameworkAssemblies>
+  </metadata>
+  <files>
+        <file src="bin\Release\Logger.Client.dll" target="lib" />
+    </files>
+</package>

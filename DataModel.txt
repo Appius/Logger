@@ -1,0 +1,109 @@
+﻿! Database have already had table "UserProfile" with "Id" and "Email" fields.
+
+CREATE TABLE Browsers ( 
+	Id int NOT NULL,
+	Name nvarchar(50) NOT NULL
+)
+;
+
+CREATE TABLE Errors ( 
+	Id int NOT NULL,
+	SiteId int NOT NULL,
+	Name nvarchar(255) NOT NULL,
+	[DateTime] datetime2(3) NOT NULL,
+	[Message] nvarchar(255),
+	HelpLink varchar(255),
+	Data nvarchar(max),
+	InnerException nvarchar(max),
+	HResult int NOT NULL,
+	[Source] varchar(255),
+	TargetSite nvarchar(255),
+	StackTrace nvarchar(max),
+	Postdata nvarchar(max),
+	Useragent nvarchar(255),
+	Referrer varchar(255),
+	OsId int NOT NULL,
+	BrowserId int NOT NULL
+)
+;
+
+CREATE TABLE OSs ( 
+	Id int NOT NULL,
+	Name varchar(50) NOT NULL
+)
+;
+
+CREATE TABLE Sites ( 
+	Id int NOT NULL,
+	UserId int NOT NULL,
+	[Key] char(16) NOT NULL,
+	IsBlocked bit DEFAULT 0 NOT NULL,
+	Url nvarchar(255) NOT NULL,
+	Name nvarchar(50) NOT NULL
+)
+;
+
+ALTER TABLE Browsers
+	ADD CONSTRAINT UQ_Browsers_Id UNIQUE (Id)
+;
+
+ALTER TABLE Browsers
+	ADD CONSTRAINT UQ_Browsers_Name UNIQUE (Name)
+;
+
+ALTER TABLE Errors
+	ADD CONSTRAINT UQ_Errors_Id UNIQUE (Id)
+;
+
+ALTER TABLE OSs
+	ADD CONSTRAINT UQ_OSs_Id UNIQUE (Id)
+;
+
+ALTER TABLE OSs
+	ADD CONSTRAINT UQ_OSs_Name UNIQUE (Name)
+;
+
+ALTER TABLE Sites
+	ADD CONSTRAINT UQ_Sites_Id UNIQUE (Id)
+;
+
+ALTER TABLE Sites
+	ADD CONSTRAINT UQ_Sites_Key UNIQUE ([Key])
+;
+
+ALTER TABLE Browsers ADD CONSTRAINT PK_Browsers 
+	PRIMARY KEY CLUSTERED (Id)
+;
+
+ALTER TABLE Errors ADD CONSTRAINT PK_Errors 
+	PRIMARY KEY CLUSTERED (Id)
+;
+
+ALTER TABLE OSs ADD CONSTRAINT PK_OSs 
+	PRIMARY KEY CLUSTERED (Id)
+;
+
+ALTER TABLE Sites ADD CONSTRAINT PK_Sites 
+	PRIMARY KEY CLUSTERED (Id)
+;
+
+
+ALTER TABLE Errors ADD CONSTRAINT FK_Errors_Browsers 
+	FOREIGN KEY (BrowserId) REFERENCES Browsers (Id)
+	ON DELETE CASCADE ON UPDATE CASCADE
+;
+
+ALTER TABLE Errors ADD CONSTRAINT FK_Errors_OSs 
+	FOREIGN KEY (OsId) REFERENCES OSs (Id)
+	ON DELETE CASCADE ON UPDATE CASCADE
+;
+
+ALTER TABLE Errors ADD CONSTRAINT FK_Errors_Sites 
+	FOREIGN KEY (SiteId) REFERENCES Sites (Id)
+	ON DELETE CASCADE ON UPDATE CASCADE
+;
+
+ALTER TABLE Sites ADD CONSTRAINT FK_Sites_Users 
+	FOREIGN KEY (Id) REFERENCES UserProfile (Id)
+	ON DELETE CASCADE ON UPDATE CASCADE
+;

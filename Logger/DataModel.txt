@@ -1,0 +1,81 @@
+﻿ALTER TABLE UserProfile
+ADD FirstName nvarchar(32) NOT NULL;
+ALTER TABLE UserProfile
+ADD LastName nvarchar(32) NOT NULL;
+ALTER TABLE UserProfile
+ADD Birthday date NOT NULL;
+
+CREATE TABLE Browsers (
+ Id int IDENTITY(1,1) PRIMARY KEY,
+ Name varchar(255) NOT NULL
+)
+;
+
+CREATE TABLE OSs ( 
+ Id int IDENTITY(1,1) PRIMARY KEY,
+ Name varchar(255) NOT NULL
+)
+;
+
+CREATE TABLE Errors ( 
+ Id int IDENTITY(1,1) PRIMARY KEY,
+ SiteId int NOT NULL,
+ Name nvarchar(255) NOT NULL,
+ [DateTime] datetime2(3) NOT NULL,
+ [Message] nvarchar(255) NOT NULL,
+ HelpLink varchar(255),
+ Data nvarchar(max),
+ HResult int NOT NULL,
+ [Source] varchar(255),
+ TargetSite nvarchar(255),
+ StackTrace nvarchar(max),
+ Postdata nvarchar(max),
+ Useragent nvarchar(255),
+ Referrer varchar(255),
+ OsId int NOT NULL,
+ BrowserId int NOT NULL
+)
+;
+
+CREATE TABLE Sites ( 
+ Id int IDENTITY(1,1) PRIMARY KEY,
+ UserId int NOT NULL,
+ ApiKey char(32) NOT NULL,
+ IsBlocked bit DEFAULT 0 NOT NULL,
+ Url nvarchar(255) NOT NULL,
+ Name nvarchar(50) NOT NULL,
+ Description nvarchar(1024)
+)
+;
+
+ALTER TABLE Browsers
+ ADD CONSTRAINT UQ_Browsers_Name UNIQUE (Name)
+;
+
+ALTER TABLE OSs
+ ADD CONSTRAINT UQ_OSs_Name UNIQUE (Name)
+;
+
+ALTER TABLE Sites
+ ADD CONSTRAINT UQ_Sites_Key UNIQUE (ApiKey)
+;
+
+ALTER TABLE Errors ADD CONSTRAINT FK_Errors_Browsers 
+ FOREIGN KEY (BrowserId) REFERENCES Browsers (Id)
+ ON DELETE CASCADE ON UPDATE CASCADE
+;
+
+ALTER TABLE Errors ADD CONSTRAINT FK_Errors_OSs 
+ FOREIGN KEY (OsId) REFERENCES OSs (Id)
+ ON DELETE CASCADE ON UPDATE CASCADE
+;
+
+ALTER TABLE Errors ADD CONSTRAINT FK_Errors_Sites 
+ FOREIGN KEY (SiteId) REFERENCES Sites (Id)
+ ON DELETE CASCADE ON UPDATE CASCADE
+;
+
+ALTER TABLE Sites ADD CONSTRAINT FK_Sites_Users 
+ FOREIGN KEY (UserId) REFERENCES UserProfile (Id)
+ ON DELETE CASCADE ON UPDATE CASCADE
+;

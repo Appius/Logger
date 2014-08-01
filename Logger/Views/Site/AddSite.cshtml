@@ -1,0 +1,69 @@
+﻿@model Logger.ViewModels.AddSiteModel
+@{
+    ViewBag.Title = "AddSite";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-6 form-addingsite">
+    @using (Html.BeginForm("Addsite", "Site", FormMethod.Post, new {@class = "form-horizontal", @onsubmit = "$(this).find('input[type=\"submit\"]').attr('disabled', 'disabled');"}))
+    {
+        <fieldset>
+            <legend>Add new site</legend>
+            @Html.ValidationSummary("", new {@class = "bs-callout-danger"})
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new {@class = "control-label"})
+                
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Name, new {@placeholder = "Name", @class = "form-control"})
+                    @Html.ValidationMessageFor(m => m.Name)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Url, new {@class = "control-label"})
+
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Url, new {@placeholder = "Url", @class = "form-control"})
+                    @Html.ValidationMessageFor(m => m.Url)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, new {@class = "control-label"})
+
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.Description, new {@placeholder = "Description", @class = "form-control"})
+                    @Html.ValidationMessageFor(m => m.Description)
+                </div>
+            </div>
+
+            <div class="controls pull-right">
+                <input type="submit" value="Submit" class="btn btn-success" />
+            </div>
+        </fieldset>
+    }
+</div>
+<div class="col-md-6" style="margin-top: 32px;">
+    <div class="bs-callout bs-callout-warning">
+        <h4>Requirements</h4>
+        <p>
+            Name's and url's fields are required, description's one is optional. Name's field must be at least 2 characters long. Url's one must be maximum 255 characters long.
+        </p>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function() {
+            $('.validation-summary-valid, .validation-summary-errors').addClass('alert alert-error');
+
+            $("form").bind('invalid-form.validate',
+                function() {
+                    $(document).find('input[type=\"submit\"]').removeAttrs('disabled');
+                }
+            );
+        });
+    </script>
+    @Scripts.Render("~/Scripts/validation")
+}

@@ -1,0 +1,126 @@
+﻿@using Logger.ViewModels
+@model IPagedList<ExceptionModel>
+@{
+    ViewBag.Title = "Exceptions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div class="pull-left">
+        <h3>General Statistics</h3>
+    </div>
+    <div class="btn-group pull-right" style="margin-top: 20px;">
+        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+            <div id="pagesize"></div> <span class="caret"></span>
+        </button>
+
+        <ul class="dropdown-menu">
+            <li><a href="javascript:changepagesize(10);">10</a></li>
+            <li><a href="javascript:changepagesize(25);">25</a></li>
+            <li><a href="javascript:changepagesize(50);">50</a></li>
+            <li><a href="javascript:changepagesize(100);">100</a></li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<table width="100" id="maintbl" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Date & time
+            </th>
+            <th>
+                Exception's message
+            </th>
+            <th>
+                OS
+            </th>
+            <th>
+                Browser
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ExceptionModel error in Model)
+        {
+            <tr>
+                <td class="namecss">@error.Name</td>
+                <td class="dtcss">@error.DateTime</td>
+                <td class="messagecss pointer" title="@error.Message" onclick=" location.href = '@Url.Action("ErrorDetail", "Stat", new {id = error.Id})' ">@error.Message</td>
+                <td class="oscss">
+                    @{
+                        if (error.OS.Name.StartsWith("Win"))
+                        {
+                            <img src='@Url.Content("~/Content/imgs/win.png")' alt="WinNT" height="35" width="35" />
+                        }
+                        else
+                        {
+                            switch (error.OS.Name)
+                            {
+                                case "Unix":
+                                    <img src='@Url.Content("~/Content/imgs/unix.png")' alt="Unix" height="35" width="35" />
+                                    break;
+                                case "Mac":
+                                    <img src='@Url.Content("~/Content/imgs/mac.png")' alt="Mac" height="35" width="35" />
+                                    break;
+                                case "Linux":
+                                    <img src='@Url.Content("~/Content/imgs/unix.png")' alt="Linux" height="35" width="35" />
+                                    break;
+                                default:
+                                    Html.DisplayText("Unknown operation system");
+                                    break;
+                            }
+                        }
+                    }
+                </td>
+                <td class="browsercss">
+                    @{
+                        switch (error.Browser.Name)
+                        {
+                            case "Chrome":
+                                <img src='@Url.Content("~/Content/imgs/chrome.png")' alt="Chrome" height="35" width="35" />
+                                break;
+                            case "IE":
+                                <img src='@Url.Content("~/Content/imgs/ie.png")' alt="IE" height="35" width="35" />
+                                break;
+                            case "Safari":
+                                <img src='@Url.Content("~/Content/imgs/safari.png")' alt="Safari" height="35" width="35" />
+                                break;
+                            case "Opera":
+                                <img src='@Url.Content("~/Content/imgs/opera.png")' alt="Opera" height="35" width="35" />
+                                break;
+                            case "Firefox":
+                                <img src='@Url.Content("~/Content/imgs/firefox.png")' alt="Firefox" height="35" width="35" />
+                                break;
+                            default:
+                                <img src='@Url.Content("~/Content/imgs/unknown.png")' alt="Unknown" height="35" width="35" />
+                                break;
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount).Options(o => o.DisplayTemplate("BootstrapPagination"))
+
+@section scripts {
+    @Scripts.Render("~/Scripts/app/logger-site")
+    @Scripts.Render("~/Scripts/cookie")
+    @*<script src="/Scripts/jquery.cookie.js"></script>*@
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var pagesize = $.cookie('isepam_stats_pagesize');
+            if (pagesize == undefined) {
+                $.cookie('isepam_stats_pagesize', '10', { expires: 365 });
+                pagesize = 10;
+            }
+            $('#pagesize').html(pagesize);
+        });
+    </script>
+}

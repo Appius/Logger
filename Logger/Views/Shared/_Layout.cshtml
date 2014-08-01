@@ -1,0 +1,58 @@
+﻿@using Logger.App_GlobalResources
+@using Logger.Core
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width">
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <title>@ViewBag.Title</title>
+        @Styles.Render("~/Content/bootstrap")
+        @Styles.Render("~/Content/css")
+        @RenderSection("styles", false)
+
+        @Scripts.Render("~/Scripts/jquery")
+        @Scripts.Render("~/Scripts/modernizr")
+    </head>
+    <body>
+        <div id="wrap">
+            <div id="main">
+                <header class="navbar navbar-inverse navbar-inner">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="/">@Resources.MainName</a>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                @if (Request.IsAuthenticated)
+                                {
+                                    @Html.ActionMenuItem("Stat", "Index", "Stat", ViewContext.RouteData.Values["controller"] as string, ViewContext.RouteData.Values["action"] as string)
+                                    @Html.ActionMenuItem("Sites", "Index", "Site", ViewContext.RouteData.Values["controller"] as string, ViewContext.RouteData.Values["action"] as string)
+                                    if (User.IsInRole("Admin"))
+                                     {
+                                         @Html.ActionMenuItem("Manage users", "Users", "Site", ViewContext.RouteData.Values["controller"] as string, ViewContext.RouteData.Values["action"] as string)
+                                     }
+                                }
+                                @Html.ActionMenuItem("Help", "Help", "Home", ViewContext.RouteData.Values["controller"] as string, ViewContext.RouteData.Values["action"] as string)
+                                @Html.ActionMenuItem("Contact", "Contact", "Home", ViewContext.RouteData.Values["controller"] as string, ViewContext.RouteData.Values["action"] as string)
+                            </ul>
+                            @Html.Partial("_LoginPartial")
+                        </div>
+                    </div>
+                </header>
+
+                <div class="container">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="container text-center">
+                @Html.GetCopyrightText()
+            </div>
+        </footer>
+
+        @Scripts.Render("~/Scripts/bootstrap")
+        @RenderSection("scripts", false)
+    </body>
+</html>
