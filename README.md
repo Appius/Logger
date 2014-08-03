@@ -12,5 +12,6 @@ You can connect an unlimited number of sites.
 
 Default login/pass
 ------------------
+[Demo site](http://logger.azurewebsites.net/)<br />
 **Login**: Administrator<br/ >
 **Pass**: qwerty
